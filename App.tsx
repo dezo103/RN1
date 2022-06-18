@@ -9,7 +9,7 @@ import {
     View,
     Image,
     ScrollView,
-    FlatList, ListRenderItem
+    FlatList, ListRenderItem, TextInput
 } from 'react-native';
 
 type dataArrayType = {
@@ -27,16 +27,26 @@ export default function App() {
     const render: ListRenderItem<dataArrayType> = ({item, index, separators}) => {
         return (
             <View style={{backgroundColor: "#ffddbb", marginVertical: 6, marginHorizontal: 6}}>
-                <Text style={{fontSize: 18, fontWeight: '500', paddingHorizontal: 12, paddingVertical: 6}}>{item.title}</Text>
+                <Text style={{
+                    fontSize: 18,
+                    fontWeight: '500',
+                    paddingHorizontal: 12,
+                    paddingVertical: 6
+                }}>{item.title}</Text>
             </View>
         )
     }
 
     return (
         <View style={styles.container}>
-            <FlatList data = {dataArray}
+            <FlatList data={dataArray}
                       renderItem={render}
-                        horizontal/>
+                      horizontal
+                      keyExtractor={item => item.id.toString()}
+            />
+            <TextInput style={styles.input}/>
+            <TextInput style={styles.input}/>
+            <TextInput style={{...styles.input, backgroundColor: '#ddd'}}/>
             <StatusBar style="auto"/>
         </View>
     );
@@ -45,11 +55,16 @@ export default function App() {
 const styles = StyleSheet.create({
     container: {
         marginTop: 40,
-        flex: 1,
+        //flex: 1,
         backgroundColor: '#ccc',
         alignItems: 'center',
         justifyContent: 'center',
     },
+    input: {
+        width: '60%',
+        height: '20%',
+        backgroundColor: '#fff'
+    }
 });
 
 
