@@ -9,29 +9,42 @@ import {
     View,
     Image,
     ScrollView,
-    FlatList, ListRenderItem, TextInput
+    FlatList, ListRenderItem, TextInput, ActivityIndicator, Dimensions, ImageBackground
 } from 'react-native';
+import {useState} from "react";
+import Svg from "react-native-svg";
 
 type dataArrayType = {
     id: number
     title: string
 }
 
+const WIDTH_SCREEN = Dimensions.get('screen').width
+const HEIGHT_SCREEN = Dimensions.get('screen').height
+const WIDTH_ITEM = Math.floor(WIDTH_SCREEN * 0.9)
+
+const backgroundImage1 = {uri: 'https://pod-potol.com/upload/medialibrary/2b7/2b723d5e1526ec69b266caac5d9ff72a.jpg'}
+const backgroundImage = {uri: 'https://images.unsplash.com/photo-1553095066-5014bc7b7f2d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8d2FsbCUyMGJhY2tncm91bmR8ZW58MHx8MHx8&w=1000&q=80'}
+const backgroundImage2 = {uri: 'http://strport.ru/sites/default/files/2_517.jpg'}
+
 const dataArray: Array<dataArrayType> = new Array(100).fill(null).map((el, index) => ({
     id: index + 1,
     title: "Lesson RN " + (index + 1)
 }))
 
+
 export default function App() {
+
+    const [value, setValue] = useState('')
 
     const render: ListRenderItem<dataArrayType> = ({item, index, separators}) => {
         return (
-            <View style={{backgroundColor: "#ffddbb", marginVertical: 6, marginHorizontal: 6}}>
+            <View style={{backgroundColor: "transparent", marginVertical: 48, marginHorizontal: 6}}>
                 <Text style={{
                     fontSize: 18,
                     fontWeight: '500',
                     paddingHorizontal: 12,
-                    paddingVertical: 6
+                    paddingVertical: 20
                 }}>{item.title}</Text>
             </View>
         )
@@ -39,32 +52,74 @@ export default function App() {
 
     return (
         <View style={styles.container}>
-            <FlatList data={dataArray}
-                      renderItem={render}
-                      horizontal
-                      keyExtractor={item => item.id.toString()}
-            />
-            <TextInput style={styles.input}/>
-            <TextInput style={styles.input}/>
-            <TextInput style={{...styles.input, backgroundColor: '#ddd'}}/>
-            <StatusBar style="auto"/>
-        </View>
-    );
+            {/*<FlatList data={dataArray}*/}
+            {/*          renderItem={render}*/}
+            {/*          horizontal*/}
+            {/*          keyExtractor={item => item.id.toString()}*/}
+            {/*/>*/}
+            {/*<Text style={{margin: 10}}>{JSON.stringify(WIDTH_ITEM, null, 2)}</Text>*/}
+            {/*<Text style={{margin: 10}}>{value}</Text>*/}
+            {/*<TextInput onChangeText={setValue} style={[styles.input, {backgroundColor: '#fff'}]}/>*/}
+            {/*<ActivityIndicator size='large' color='indianred'/>*/}
+            <View style={[styles.box, {flex: 1}]}>
+                <ImageBackground source={backgroundImage1} resizeMode="cover" style={styles.image}>
+                    <Text style={[styles.text]}>Hello</Text>
+                </ImageBackground>
+            </View>
+            <View style={[styles.box, {flex: 5}]}>
+                <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.image}>
+                    <Text style={[styles.text]}>Hi, there</Text>
+                </ImageBackground>
+            </View>
+            <View style={[styles.box, {flex: 1}]}>
+                <ImageBackground source={backgroundImage2} resizeMode="cover" style={styles.image}>
+                    <Text style={[styles.text]}>Goodbye</Text>
+                </ImageBackground>
+            </View>
+    <StatusBar style="auto"/>
+</View>
+)
+    ;
 }
 
 const styles = StyleSheet.create({
     container: {
+        width: WIDTH_ITEM,
+        //height: Math.floor(HEIGHT_SCREEN * 0.7),
+        marginLeft: (WIDTH_SCREEN - WIDTH_ITEM) / 2,
         marginTop: 40,
-        //flex: 1,
-        backgroundColor: '#ccc',
+        flex: 1,
+        //backgroundColor: '#ccc',
         alignItems: 'center',
         justifyContent: 'center',
     },
     input: {
+        fontSize: 20,
         width: '60%',
-        height: '20%',
-        backgroundColor: '#fff'
-    }
+        height: 38,
+        backgroundColor: '#000',
+        margin: 10
+    },
+    box: {
+        //height: 30,
+        //margin: 5,
+        width: '100%',
+        borderStyle: 'solid',
+        borderColor: 'transparent',
+       // borderWidth: 2,
+        //borderRadius: 15,
+        overflow: "hidden",
+        // display: 'flex',
+        // justifyContent: 'center',
+        // alignItems: 'center',
+    },
+    image: {
+        flex: 1,
+    },
+    text: {
+        fontSize: 40,
+        color: 'white'
+    },
 });
 
 
